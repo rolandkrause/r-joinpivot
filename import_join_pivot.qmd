@@ -40,6 +40,7 @@ Read in the data `variants.csv` with the appropriate function into a tibble call
 ##### Clean the table of genetic *variants* such that all variants appear as a column labeled by their position. 
 The format in the input is the reference allele, the position and the variant, commonly called alternative allele. In `T6G`, `T` is the reference allele, `6` is the position (along the gene) and `G` is the variant allele. 
 The result should look something like below.
+
 sampleid |	3 |	5 |	6 |	...
 ----|---|---|---|--
 S1 |	T |	G |G |	…
