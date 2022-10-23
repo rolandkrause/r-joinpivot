@@ -1,0 +1,64 @@
+---
+title: "Import, join and pivot"
+subtitle: "readr/dplyr/tidyr"
+author: "Roland Krause"
+date: "24 Oct. 2022"
+---
+
+### Import as pair programming exercise
+
+Import the **Per base sequence quality** information from both files `fastqc_data_dad1.txt` and `fastqc_data_dad2.txt` with a single statement.
+Select good column names!
+
+```{r}
+# Write your answer here
+```
+
+#### Is the data in the original file tidy? 
+
+> Write you answer here as text.
+
+### Judgment - part two
+
+##### Import the [data from the website](https://biostat2.uni.lu/practicals/data/judgments.tsv).
+
+Assign to the name `judgments`
+
+```{r}
+# Write your answer here
+```
+
+### Genetic variants
+
+#### Import
+Read in the data `variants.csv` with the appropriate function into a tibble called `variants` .
+
+```{r}
+# Write your answer here
+```
+
+##### Clean the table of genetic *variants* such that all variants appear as a column labeled by their position. 
+The format in the input is the reference allele, the position and the variant, commonly called alternative allele. In `T6G`, `T` is the reference allele, `6` is the position (along the gene) and `G` is the variant allele. 
+The result should look something like below.
+sampleid |	3 |	5 |	6 |	...
+----|---|---|---|--
+S1 |	T |	G |G |	…
+S2 |	G |	G |	NA |	…
+S3 |	… |	… |	… |	…
+
+##### Read in the file `variant_significance.txt`, which contains the evaluation of variants for functions.
+
+```{r}
+# Write your answer here
+```
+
+##### Select the subjects in table *variants* that contain variants labeled as *damaging*. 
+
+The final output should be vector of sample ids.
+
+
+```{r}
+# Write your answer here
+```
+
+
