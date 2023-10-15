@@ -1,8 +1,0 @@
-variant	significance
-A3T	unknown
-A3G	damaging
-T5G	benign
-T6G	damaging
-T6C	benign
-G10C	unknown
-T12A	damaging

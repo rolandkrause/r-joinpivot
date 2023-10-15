@@ -1,65 +1,116 @@
 ---
-title: "Import, join and pivot"
-subtitle: "readr/dplyr/tidyr"
-author: "Roland Krause"
-date: "24 Oct. 2022"
+title: "Join and pivot"
+subtitle: "dplyr/tidyr"
+author: "NN"
+date: "16 Oct. 2023"
 ---
 
-### Import as pair programming exercise
+```{r}
+#| include: false
+library(tidyverse)
+```
 
-Import the **Per base sequence quality** information from both files `fastqc_data_dad1.txt` and `fastqc_data_dad2.txt` with a single statement.
-Select good column names!
+
+### Exercise 1 - Quality data
+
+Import the information from the files `fastqc_data_dad1.txt` and `fastqc_data_dad2.txt`. These files contains a variety of data from a quality control step. Each data set starts with ">>" and a description and ends in ">>END_MODULE". 
+Extract the **Per base sequence quality**. 
 
 ```{r}
 # Write your answer here
 ```
+
 
 #### Is the data in the original file tidy? 
 
 > Write you answer here as text.
 
-### Judgment - part two
+### Join the two resulting tables on the position
 
-##### Import the [data from the website](https://biostat2.uni.lu/practicals/data/judgments.tsv).
-
-Assign to the name `judgments`
+The column in found as `# Base` in the original data.
 
 ```{r}
 # Write your answer here
 ```
 
-### Genetic variants
+#### Compute the differences in the Means of both `dad` sets
 
-#### Import
-Read in the data `variants.csv` with the appropriate function into a tibble called `variants` .
-
-```{r}
-# Write your answer here
-```
-
-##### Clean the table of genetic *variants* such that all variants appear as a column labeled by their position. 
-The format in the input is the reference allele, the position and the variant, commonly called alternative allele. In `T6G`, `T` is the reference allele, `6` is the position (along the gene) and `G` is the variant allele. 
-The result should look something like below.
-
-sampleid |	3 |	5 |	6 |	...
-----|---|---|---|--
-S1 |	T |	G |G |	…
-S2 |	G |	G |	NA |	…
-S3 |	… |	… |	… |	…
-
-##### Read in the file `variant_significance.txt`, which contains the evaluation of variants for functions.
+Compute the median absolute deviation of the differences of the two Means. You can use the `abs()` and `median()` functions
 
 ```{r}
 # Write your answer here
 ```
 
-##### Select the subjects in table *variants* that contain variants labeled as *damaging*. 
+### Exercise 2 - Benchmark `inner_join()`, `semi_join()` and `is.element()` on the judgements data
 
-The final output should be vector of sample ids.
+Create a random sample of 100 rows column using the `dplyr::sample_n()` function 
+```{r}
+# Write your answer here
+sample_n(judgments, 100) -> my_sample
+```
 
+Use `microbenchmark` package to test the three statement. Join or filter the complete `judgments` data set by it's sample.
+
+The function `microbenchmark()` accepts several _expressions_.
+
+```{r}
+library(microbenchmark)
+
+microbenchmark(judgments |> filter(is.element(subject, my_sample$subject)),
+               semi_join(judgments, my_sample, join_by(subject)),
+               inner_join(judgments, my_sample, join_by(subject)))
+```
+
+Interpret the results. Is this a large date set?
+
+
+### Exercise 3 - Judgements reprise
+
+Read the `judgments` dataset from the web. 
+```{r}
+judgments <- readr::read_csv("data/judgments.csv")
+```
+
+
+
+
+### Compute basic statistics for all moral dilemma columns. 
+Compute the mean, the median, the standard deviation as well as min and max values.
+Find meaningful short names for the functions such as `med` for  the median.
+
+Assign `judgments_stats` to the results.
 
 ```{r}
 # Write your answer here
 ```
 
+
+##### Pivoting for readability, first convert to the long format
+
+Take the results that are available in `judgments_condition_stats` from the previous `dplyr` exercise and bring the data into the long format.
+
+After this step, your tibble should contain two columns:
+  * The name of the moral dilemma and stats (in one column, such as `dog_mean`, `dog_sd` ...)
+  * The values of the stats by moral dilemma.
+
+If you don't clean up the dilemma prefix, the names will be `moral_dilemma_dog_mean`, `moral_dilemma_dog_sd` etc...
+Like in the `dplyr` lecture, use the option `names_prefix = ` in `pivot_longer()` to get rid of the identical prefix `moral_dilemma_` for every rows.
+
+```{r, solution = TRUE}
+# Write your answer here
+```
+
+##### Continue from the previous step, to pivot to the wider format again.
+
+The stats of each dilemma will be individual columns, should look like this:
+
+dilemma| mean | sd |   ...|
+------:|-----:|---:|---|
+dog    | 7.20 | 2.23 |...|
+wallet | 7.42 | 2.01 |...|
+...    | ...  | ... | ...|
+
+```{r, solution = TRUE}
+
+```
 
