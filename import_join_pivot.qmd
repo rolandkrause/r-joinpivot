@@ -3,7 +3,6 @@ title: "Join and pivot"
 author: Your name here
 date: today
 format: html
-css: "site.css"
 ---
 
 ## Aims 
@@ -99,16 +98,6 @@ for (i in seq(1, nrow(judgments_copy))){
   } 
 }
 
-
-
-
-
-
-
-
-
-
-
 ```
 
 ### Why is this code not a great solution to the problem?
@@ -123,10 +112,6 @@ for (i in seq(1, nrow(judgments_copy))){
 
 ```{r}
 # Your answer in code
-
-
-
-
 
 
 ```
